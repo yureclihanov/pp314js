@@ -12,7 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.ManyToMany;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import java.util.Collection;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -118,18 +118,6 @@ public class User {
         roles.add(role);
     }
 
-    public String getRolesAsString() {
-        boolean first = true;
-        String s = "";
-        for (Role role : getRoles()) {
-            if (!first) {
-                s += ", ";
-            }
-            s += role.toString();
-            first = false;
-        }
-        return s;
-    }
 
     @Override
     public String toString() {

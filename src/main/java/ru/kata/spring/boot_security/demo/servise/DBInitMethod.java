@@ -22,6 +22,7 @@ public class DBInitMethod {
         this.roleService = roleService;
     }
 
+
     @PostConstruct
     public void myInitMethod() {
         Role userRole = new Role("ROLE_USER");

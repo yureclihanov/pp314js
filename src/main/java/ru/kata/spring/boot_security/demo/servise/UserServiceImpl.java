@@ -4,12 +4,9 @@ package ru.kata.spring.boot_security.demo.servise;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 import ru.kata.spring.boot_security.demo.model.User;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,16 +62,4 @@ public class UserServiceImpl implements UserService {
         return dao.findByEmail(email);
     }
 
-  //  public void setInitData() {
-  //      Role userRole = new Role("ROLE_USER");
-  //      Role adminRole = new Role("ROLE_ADMIN");
-  //      dao.save(new User("user", "user", 30, "user@mail.ru", "123", new HashSet<Role>() {
-  //          {
-  //          add(userRole);}
-  //      }));
-  //      dao.save(new User("admin", "admin", 35, "admin@mail.ru", "456", new HashSet<Role>() {{
-  //          add(userRole);
-  //          add(adminRole);
-  //      }}));
-  //  }
 }

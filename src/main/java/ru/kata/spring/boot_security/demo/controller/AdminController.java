@@ -10,7 +10,6 @@ import ru.kata.spring.boot_security.demo.servise.UserService;
 
 import java.security.Principal;
 
-
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
