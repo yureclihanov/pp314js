@@ -27,7 +27,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     }
 
     public User findUserByName(String name) {
-        return userRepository.findUserByName(name);
+        return userRepository.findByEmail(name);
     }
 
     @Override
@@ -37,8 +37,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }
-        return new org.springframework.security.core.userdetails.User(user.getName(),
-                user.getPassword(), rolesToAuthority(user.getRoles()));
+        return new org.springframework.security.core.userdetails.User(user.getEmail(),
+                user.getPassword(), true, true, true,true, rolesToAuthority(user.getRoles()));
     }
 
     private Collection<? extends GrantedAuthority> rolesToAuthority(Collection<Role> roles) {

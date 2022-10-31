@@ -13,6 +13,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -31,6 +33,9 @@ public class User {
     @Column
     private int age;
     @Column
+    private String email;
+
+    @Column
     private String password;
 
 
@@ -38,15 +43,19 @@ public class User {
     @JoinTable(name = "users_roles",
                      joinColumns = @JoinColumn(name = "user_id"),
                      inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     public User() {
     }
 
-    public User(String name, String lastName, int age) {
+    public User(String name, String lastName, int age, String email, String password,
+                Set<Role> roles) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
     }
 
     public int getId() {
@@ -81,6 +90,14 @@ public class User {
         this.age = age;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -89,12 +106,29 @@ public class User {
         this.password = password;
     }
 
-    public Collection<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public void addRole(Role role) {
+        roles.add(role);
+    }
+
+    public String getRolesAsString() {
+        boolean first = true;
+        String s = "";
+        for (Role role : getRoles()) {
+            if (!first) {
+                s += ", ";
+            }
+            s += role.toString();
+            first = false;
+        }
+        return s;
     }
 
     @Override
