@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.servise;
+package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,7 +30,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findUserByName(username);
         if (user == null) {

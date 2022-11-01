@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.servise;
+package ru.kata.spring.boot_security.demo.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
     private UserRepository dao ;
@@ -33,11 +33,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void add(User user) {
         dao.save(user);
     }
 
     @Override
+    @Transactional
     public void update(int id, User user) {
         User userToUpdate = dao.getById(id);
         userToUpdate.setName(user.getName());
@@ -49,6 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteById(int id) {
         dao.deleteById(id);
     }
