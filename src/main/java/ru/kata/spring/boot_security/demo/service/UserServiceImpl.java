@@ -2,8 +2,10 @@ package ru.kata.spring.boot_security.demo.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.Exception.UserNotFoundException;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 import ru.kata.spring.boot_security.demo.model.User;
 
@@ -14,11 +16,18 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
-    private UserRepository dao ;
+    private final UserRepository dao;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository dao) {
+    public UserServiceImpl(UserRepository dao, PasswordEncoder passwordEncoder) {
         this.dao = dao;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public User passwordEncode(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return user;
     }
 
     @Override
@@ -29,13 +38,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserById(int id) {
         Optional<User> user = dao.findById(id);
-        return user.orElse(null);
+        return user.orElseThrow(UserNotFoundException::new);
     }
 
     @Override
     @Transactional
     public void add(User user) {
-        dao.save(user);
+        dao.save(passwordEncode(user));
     }
 
     @Override
@@ -47,6 +56,7 @@ public class UserServiceImpl implements UserService {
         userToUpdate.setEmail(user.getEmail());
         userToUpdate.setAge(user.getAge());
         userToUpdate.setRoles(user.getRoles());
+        userToUpdate.setPassword(user.getPassword());
         dao.save(userToUpdate);
     }
 

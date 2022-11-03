@@ -13,6 +13,6 @@ public interface UserService {
     void deleteById(int id);
     User findUserByName(String name);
     User findByEmail(String email);
- //   void setInitData();
+    User passwordEncode(User user);
 
 }

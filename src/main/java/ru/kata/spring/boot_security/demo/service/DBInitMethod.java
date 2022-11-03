@@ -38,13 +38,12 @@ public class DBInitMethod {
         adminSet.add(userRole);
         userSet.add(userRole);
 
-        // общий пароль для всех: test
-        String parol = "$2a$12$9cTzKhEOrZz.V6VIANHRR.LYa08hS.B1dqBrOcuDImjCHrWy4wL5u";
+
 
         User adminUser = new User("admin", "admin", 20, "admin@mail.ru",
-                parol,adminSet);
+                "test",adminSet);
         User newUser = new User("user", "user", 20, "user@mail.ru",
-                parol, userSet);
+                "test", userSet);
 
         userService.add(adminUser);
         userService.add(newUser);
