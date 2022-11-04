@@ -35,20 +35,21 @@ function refreshData() {
 
 async function addNewUser() {
     let id1
-    let authoritys
+    let authority1
     let role1
 
-    }if ($('#newRoles').val().toString() === '1') {
+    if ($('#newRoles').val().toString() === '1') {
         id1 = '1'
         role1 = 'ROLE_USER'
-        authoritys = 'ROLE_USER'
+        authority1 = 'ROLE_USER'
     } else {
         id1 = '2'
         role1 = 'ROLE_ADMIN'
-        authoritys = 'ROLE_ADMIN'
+        authority1 = 'ROLE_ADMIN'
     }
 
-    await fetch(requestUrl, { method: 'POST',
+    await fetch(requestUrl, {
+        method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -60,11 +61,11 @@ async function addNewUser() {
             password: $('#newPassword').val(),
             age: $('#newAge').val(),
             email: $('#newUserEmail').val(),
-            roles:[ {
+            roles: [{
                 id: id1,
                 role: role1,
-                authority: authoritys
-    }]
+                authority: authority1
+            }]
         })
     })
         .then((r) => {
@@ -72,7 +73,7 @@ async function addNewUser() {
                 refreshData()
             }
         })
-
+}
 
 //------ Modal update user ------------------------
 function editModal(id) {
@@ -93,8 +94,22 @@ function editModal(id) {
 }
 
 function editUser(id) {
+    let id2
+    let authority2
+    let role2
+
+    if ($('#rolesEdit').val().toString() === '1') {
+        id2 = '1'
+        role2 = 'ROLE_USER'
+        authority2 = 'ROLE_USER'
+    } else {
+        id2 = '2'
+        role2 = 'ROLE_ADMIN'
+        authority2 = 'ROLE_ADMIN'
+    }
     fetch(requestUrl + '/' + id,
-        { method: "PUT",
+        {
+            method: "PUT",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -105,11 +120,13 @@ function editUser(id) {
                     name: document.getElementById('edName').value,
                     lastName: document.getElementById('edLastName').value,
                     age: document.getElementById('edAge').value,
-                    username: document.getElementById('edUserEmail').value,
+                    email: document.getElementById('edUserEmail').value,
                     password: document.getElementById('edPassword').value,
-                    roles: [
-                        document.getElementById('rolesEdit').value
-                    ]
+                    roles: [{
+                        id: id2,
+                        role: role2,
+                        authority: authority2
+                    }]
                 })
         }).then((re) => {
         $('#editModal').modal("hide")

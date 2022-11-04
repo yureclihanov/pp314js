@@ -22,9 +22,9 @@
 <body>
 <!-- NavBar -->
 <nav class="navbar navbar-dark bg-dark">
-    <!-- <a class="navbar-brand" href="#">
+     <a class="navbar-brand" href="#">
          <strong><span th:text="${userRep.getEmail()}"></span></strong> with roles: <span
-             th:each="role : ${userRep.roles}" th:text="${role.toString() + ' '}"></span></a>-->
+             th:each="role : ${userRep.roles}" th:text="${role.toString() + ' '}"></span></a>
     <a class="nav-link text-secondary" href="/logout"><h5>Logout</h5></a>
 </nav>
 <div class="container-fluid d-flex flex-column">
