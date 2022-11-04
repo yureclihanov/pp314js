@@ -6,12 +6,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.Exception.UserNotCreate;
 import ru.kata.spring.boot_security.demo.Exception.UserNotUpdate;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("admin/api/users")
@@ -35,7 +39,6 @@ public class RestControllers {
 
     @PostMapping
     public ResponseEntity<HttpStatus> createUser(@RequestBody User user) {
-    //    try {
             userService.add(user);
             return new ResponseEntity<>(HttpStatus.OK);
      //   } catch (UserNotCreate e) {
@@ -57,17 +60,17 @@ public class RestControllers {
 
     @PutMapping("{id}")
     public ResponseEntity<HttpStatus> editUser(@RequestBody User user, @PathVariable("id") int id) {
-        try {
-            String userPassword = userService.findUserById(id).getPassword();
-            if (userPassword.equals(user.getPassword())) {
+      //  try {
+      //      String userPassword = userService.findUserById(id).getPassword();
+      //      if (userPassword.equals(user.getPassword())) {
                 userService.update(id, user);
-            } else {
-                userService.add(user);
-            }
+     //       } else {
+     //           userService.add(user);
+     //       }
             return new ResponseEntity<>(HttpStatus.OK);
-        }catch (UserNotUpdate e) {
-            throw new UserNotUpdate("The user is not updated");
-        }
+     //   }catch (UserNotUpdate e) {
+     //       throw new UserNotUpdate("The user is not updated");
+     //   }
 
     }
 

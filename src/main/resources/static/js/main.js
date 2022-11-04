@@ -12,7 +12,7 @@ function refreshData() {
         $.each(users, function (key, object) {
             let roles = ''
             $.each(object.roles, function (k, o) {
-                roles += o.name + ' '
+                roles += o.role + ' '
             })
             tBody += ('<tr>');
             tBody += ('<td>' + object.id + '</td>');
@@ -34,12 +34,25 @@ function refreshData() {
 //------ Create new user ------------------------
 
 async function addNewUser() {
-    await fetch(requestUrl, {
+    let id1
+    let authoritys
+    let role1
+
+    }if ($('#newRoles').val().toString() === '1') {
+        id1 = '1'
+        role1 = 'ROLE_USER'
+        authoritys = 'ROLE_USER'
+    } else {
+        id1 = '2'
+        role1 = 'ROLE_ADMIN'
+        authoritys = 'ROLE_ADMIN'
+    }
+
+    await fetch(requestUrl, { method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        method: 'POST',
 
         body: JSON.stringify({
             name: $('#newName').val(),
@@ -47,21 +60,18 @@ async function addNewUser() {
             password: $('#newPassword').val(),
             age: $('#newAge').val(),
             email: $('#newUserEmail').val(),
-            roles: [
-                document.getElementById('newRoles').value
-            ]
-
+            roles:[ {
+                id: id1,
+                role: role1,
+                authority: authoritys
+    }]
         })
     })
         .then((r) => {
             if (r.ok) {
-                $('form input[type="text"], form input[type="password"], form input[type="number"], form textarea')
-                    .val('');
-                $('#nav-home-tab').tab('show')
                 refreshData()
             }
         })
-}
 
 
 //------ Modal update user ------------------------
@@ -84,12 +94,11 @@ function editModal(id) {
 
 function editUser(id) {
     fetch(requestUrl + '/' + id,
-        {
+        { method: "PUT",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            method: "PUT",
             body: JSON.stringify(
                 {
                     id: document.getElementById('edId').value,
